@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Chess } from 'chess.js';
 import ChessBoardWrapper from './components/ChessBoardWrapper';
-import { parseStockfishLine, getTurnFromFen } from './stockfishHelpers.js';
+import { parseStockfishLine, getTurnFromFen } from './stockfishHelpers';
 import './App.css';
 import EngineControls from './components/EngineControls';
 import MoveNav from './components/MoveNav';
@@ -169,7 +169,7 @@ function App() {
       const parsed = parseStockfishLine(line);
       if (line.startsWith('info')) {
         if (parsed.depth) {
-          depth = parsed.depth;
+          depth = parsed.depth.toString();
           if (parsed.depth === maxDepth && parsed.bestMove) {
             bestMoveAtMaxDepthRef.current = parsed.bestMove;
           }
