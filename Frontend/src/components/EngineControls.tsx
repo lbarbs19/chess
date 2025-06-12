@@ -1,25 +1,39 @@
 import React from 'react';
 import ToggleSwitch from './ToggleSwitch';
 
-export default function EngineControls({ engineOn, setEngineOn, showEval, setShowEval, showArrows, setShowArrows, maxDepth, setMaxDepth }) {
+interface EngineControlsProps {
+  engineOn: boolean;
+  setEngineOn: (on: boolean) => void;
+  showEval: boolean;
+  setShowEval: (on: boolean) => void;
+  showArrows: boolean;
+  setShowArrows: (on: boolean) => void;
+  maxDepth: number;
+  setMaxDepth: (depth: number) => void;
+}
+
+export default function EngineControls({ engineOn, setEngineOn, showEval, setShowEval, showArrows, setShowArrows, maxDepth, setMaxDepth }: EngineControlsProps) {
+  // Fix event types for onChange
+  // Example: onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEngineOn(e.target.checked)}
+
   const disabled = !engineOn;
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
       <ToggleSwitch
         checked={engineOn}
-        onChange={e => setEngineOn(e.target.checked)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEngineOn(e.target.checked)}
         label="Engine"
         disabled={false}
       />
       <ToggleSwitch
         checked={showEval}
-        onChange={e => setShowEval(e.target.checked)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setShowEval(e.target.checked)}
         label="Show Eval Bar"
         disabled={disabled}
       />
       <ToggleSwitch
         checked={showArrows}
-        onChange={e => setShowArrows(e.target.checked)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setShowArrows(e.target.checked)}
         label="Show Best Move"
         disabled={disabled}
       />

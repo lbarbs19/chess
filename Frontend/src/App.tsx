@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Chess } from 'chess.js';
 import ChessBoardWrapper from './components/ChessBoardWrapper';
-import { parseStockfishLine, getTurnFromFen } from './stockfishHelpers';
+import { parseStockfishLine, getTurnFromFen } from './stockfishHelpers.js';
 import './App.css';
 import EngineControls from './components/EngineControls';
 import MoveNav from './components/MoveNav';
@@ -13,29 +13,29 @@ import SidebarButton from './components/SidebarButton';
 // Main App component
 function App() {
   const [game, setGame] = useState(new Chess());
-  const [fen, setFen] = useState(game.fen());
-  const [engineOutput, setEngineOutput] = useState("");
-  const [arrow, setArrow] = useState([]);
-  const [moveHistory, setMoveHistory] = useState([game.fen()]);
-  const [moveIndex, setMoveIndex] = useState(0);
-  const [engineOn, setEngineOn] = useState(true);
-  const [showEval, setShowEval] = useState(true); // Controls eval bar
-  const [showArrows, setShowArrows] = useState(true); // Controls arrows
+  const [fen, setFen] = useState<string>(game.fen());
+  const [engineOutput, setEngineOutput] = useState<string>("");
+  const [arrow, setArrow] = useState<any[]>([]);
+  const [moveHistory, setMoveHistory] = useState<string[]>([game.fen()]);
+  const [moveIndex, setMoveIndex] = useState<number>(0);
+  const [engineOn, setEngineOn] = useState<boolean>(true);
+  const [showEval, setShowEval] = useState<boolean>(true); // Controls eval bar
+  const [showArrows, setShowArrows] = useState<boolean>(true); // Controls arrows
   const showArrowsRef = useRef(showArrows);
-  const [evalScore, setEvalScore] = useState(0);
-  const [evalDisplay, setEvalDisplay] = useState('0.00');
-  const [maxDepth, setMaxDepth] = useState(20); // For depth slider
-  const [computerMode, setComputerMode] = useState(false); // For computer mode
-  const [computerDepth, setComputerDepth] = useState(10); // Separate computer depth
-  const workerRef = useRef(null);
-  const computerWorkerRef = useRef(null); // Separate worker for computer mode
-  const bestMoveRef = useRef('');
-  const bestMoveAtMaxDepthRef = useRef('');
-  const lastMoveByComputer = useRef(false);
+  const [evalScore, setEvalScore] = useState<number>(0);
+  const [evalDisplay, setEvalDisplay] = useState<string>('0.00');
+  const [maxDepth, setMaxDepth] = useState<number>(20); // For depth slider
+  const [computerMode, setComputerMode] = useState<boolean>(false); // For computer mode
+  const [computerDepth, setComputerDepth] = useState<number>(10); // Separate computer depth
+  const workerRef = useRef<any>(null);
+  const computerWorkerRef = useRef<any>(null); // Separate worker for computer mode
+  const bestMoveRef = useRef<string>('');
+  const bestMoveAtMaxDepthRef = useRef<string>('');
+  const lastMoveByComputer = useRef<boolean>(false);
   const SLIDER_MIN = -10, SLIDER_MAX = 10;
 
   // Helper: play move/capture sound
-  function playMoveSound(isCapture) {
+  function playMoveSound(isCapture: boolean) {
     // Intentionally left blank: sound logic removed from App
   }
 
@@ -49,10 +49,10 @@ function App() {
   }
 
   // Replace onDrop with onMove for ChessBoardWrapper
-  function handleBoardMove(sourceSquare, targetSquare) {
+  function handleBoardMove(sourceSquare: string, targetSquare: string) {
     try {
       const newGame = new Chess(fen);
-      const moveObj = newGame.moves({ verbose: true }).find(m => m.from === sourceSquare && m.to === targetSquare);
+      const moveObj = newGame.moves({ verbose: true }).find((m: any) => m.from === sourceSquare && m.to === targetSquare);
       const isCapture = moveObj && (moveObj.captured || moveObj.flags.includes('e'));
       const move = newGame.move({ from: sourceSquare, to: targetSquare, promotion: "q" });
       if (!move) return false;
@@ -78,7 +78,7 @@ function App() {
   }
 
   useEffect(() => {
-    const handleKeyDown = e => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowLeft") goToMove(moveIndex - 1);
       else if (e.key === "ArrowRight") goToMove(moveIndex + 1);
     };
@@ -143,7 +143,7 @@ function App() {
     showArrowsRef.current = showArrows;
   }, [showArrows]);
 
-  function analyzePosition(fen, isComputerMove = false) {
+  function analyzePosition(fen: string, isComputerMove = false) {
     if (!engineOn) return resetEngineDisplay();
     const chess = new Chess(fen);
     if (chess.isGameOver()) {
@@ -159,7 +159,7 @@ function App() {
     try {
       engine = new window.Worker("/stockfish.js", { type: "classic" });
       workerRef.current = engine;
-    } catch (err) {
+    } catch (err: any) {
       setEngineOutput(`Failed to load Stockfish worker: ${err.message}\n`);
       return;
     }
@@ -224,7 +224,7 @@ function App() {
     engine.postMessage(`go depth ${maxDepth}`);
   }
 
-  function goToMove(index) {
+  function goToMove(index: number) {
     if (index < 0 || index >= moveHistory.length) return;
     bestMoveRef.current = '';
     bestMoveAtMaxDepthRef.current = '';

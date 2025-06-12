@@ -1,6 +1,15 @@
 import React from 'react';
 
-export default function EvalBar({ show, evalScore, evalDisplay, SLIDER_MIN, SLIDER_MAX, boardWidth }) {
+interface EvalBarProps {
+  show: boolean;
+  evalScore: number;
+  evalDisplay: string;
+  SLIDER_MIN: number;
+  SLIDER_MAX: number;
+  boardWidth: number;
+}
+
+export default function EvalBar({ show, evalScore, evalDisplay, SLIDER_MIN, SLIDER_MAX, boardWidth }: EvalBarProps) {
   // Normalize evalScore to 0-1 for bar fill (1 is white wins, 0 is black wins)
   const percent = Math.max(0, Math.min(1, (evalScore - SLIDER_MIN) / (SLIDER_MAX - SLIDER_MIN)));
   // Calculate the vertical position for the eval text: it should be at the top of the white bar

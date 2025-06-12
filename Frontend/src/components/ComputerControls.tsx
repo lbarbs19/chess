@@ -1,7 +1,14 @@
 import React from 'react';
 import ToggleSwitch from './ToggleSwitch';
 
-export default function ComputerControls({ computerMode, setComputerMode, computerDepth, setComputerDepth }) {
+interface ComputerControlsProps {
+  computerMode: boolean;
+  setComputerMode: (on: boolean) => void;
+  computerDepth: number;
+  setComputerDepth: (depth: number) => void;
+}
+
+export default function ComputerControls({ computerMode, setComputerMode, computerDepth, setComputerDepth }: ComputerControlsProps) {
   return (
     <div style={{
       minWidth: 180,
@@ -23,7 +30,7 @@ export default function ComputerControls({ computerMode, setComputerMode, comput
       <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 6, color: '#fff', letterSpacing: 0.5 }}>Play Against CPU</div>
       <ToggleSwitch
         checked={computerMode}
-        onChange={e => setComputerMode(e.target.checked)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setComputerMode(e.target.checked)}
         label="Enable Computer"
         disabled={false}
       />
