@@ -161,9 +161,9 @@ export default function FloatingMusicPlayer() {
             borderTopRightRadius: 18,
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'flex-end',
+            justifyContent: 'flex-start', // Move button to left
             userSelect: 'none',
-            paddingRight: 8,
+            paddingLeft: 8, // Add left padding for button
             boxSizing: 'border-box',
             position: 'relative',
             overflow: 'hidden',
@@ -184,7 +184,7 @@ export default function FloatingMusicPlayer() {
               fontSize: 22,
               cursor: 'pointer',
               padding: 0,
-              marginLeft: 0,
+              marginRight: 0,
               width: 24,
               height: 24,
               lineHeight: 1,

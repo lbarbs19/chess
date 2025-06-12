@@ -1,0 +1,263 @@
+/* Lobby.css - Red vs Blue team-vs-team lobby UI, fixed sidebar, scrollable lobby, no top cut-off */
+.lobby-root {
+  font-family: 'Montserrat', 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(120deg, #1a1d2b 0%, #0d1b2a 100%);
+  color: #fff;
+  padding: 0 0 32px 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Sidebar should be fixed */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 80px; /* or your sidebar width */
+  z-index: 200;
+  background: #191c24;
+  box-shadow: 2px 0 12px #0002;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* ...existing sidebar styles... */
+}
+
+/* Make sure main content doesn't go under sidebar */
+.lobby-root {
+  margin-left: 80px; /* match sidebar width */
+}
+
+.lobby-header {
+  margin-top: 32px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.lobby-header h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 0.2em;
+  letter-spacing: 1px;
+}
+.lobby-code {
+  font-size: 1.1rem;
+  background: #23272f;
+  border-radius: 8px;
+  padding: 6px 18px;
+  display: inline-block;
+  margin-top: 4px;
+  color: #1db954;
+  font-weight: 600;
+  letter-spacing: 2px;
+  box-shadow: 0 2px 8px #0002;
+}
+.lobby-main {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 48px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 24px auto;
+}
+.team-card {
+  background: rgba(35,39,47,0.98);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px #0006;
+  padding: 24px 18px 18px 18px;
+  min-width: 260px;
+  max-width: 320px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 420px;
+}
+.team-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+.team-card:first-child .team-title {
+  color: #e63946;
+}
+.team-card:last-child .team-title {
+  color: #457bff;
+}
+.team-list-scroll {
+  width: 100%;
+  max-height: 320px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+.player-slot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(25,20,20,0.13);
+  border-radius: 8px;
+  padding: 7px 10px;
+  margin-bottom: 6px;
+  min-height: 38px;
+  transition: background 0.18s;
+  font-size: 1.05rem;
+}
+.team-card:first-child .player-slot.filled {
+  background: rgba(230,57,70,0.13);
+}
+.team-card:last-child .player-slot.filled {
+  background: rgba(69,123,255,0.13);
+}
+.team-card:first-child .player-slot.captain {
+  border: 2px solid #e63946;
+  box-shadow: 0 0 0 2px #e6394644;
+}
+.team-card:last-child .player-slot.captain {
+  border: 2px solid #457bff;
+  box-shadow: 0 0 0 2px #457bff44;
+}
+.avatar-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #23272f;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px #0002;
+  border: 2px solid #191414;
+}
+.team-card:first-child .avatar-circle {
+  border-color: #e63946;
+}
+.team-card:last-child .avatar-circle {
+  border-color: #457bff;
+}
+.player-name {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+.empty-slot {
+  color: #888;
+  font-style: italic;
+}
+.captain-badge {
+  background: #fff;
+  color: #e63946;
+  font-size: 0.85em;
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 2px 7px;
+  margin-left: 8px;
+  letter-spacing: 0.5px;
+}
+.team-card:last-child .captain-badge {
+  color: #457bff;
+}
+.team-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 2px;
+}
+.team-card:first-child .team-actions button {
+  background: #e63946;
+  color: #fff;
+}
+.team-card:last-child .team-actions button {
+  background: #457bff;
+  color: #fff;
+}
+.team-actions button {
+  border: none;
+  border-radius: 7px;
+  padding: 7px 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 8px #0002;
+}
+.team-actions button:disabled {
+  background: #444;
+  color: #aaa;
+  cursor: not-allowed;
+}
+.vs-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  gap: 18px;
+  margin-top: 40px;
+}
+.vs-logo {
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, #e63946 0%, #457bff 100%);
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 24px #0006;
+  margin-bottom: 8px;
+}
+.designate-captain-btn {
+  background: #23272f;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  padding: 7px 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, border 0.18s;
+  margin-top: 8px;
+}
+.designate-captain-btn:disabled {
+  background: #444;
+  color: #aaa;
+  border: 2px solid #444;
+  cursor: not-allowed;
+}
+.lobby-footer {
+  margin-top: 18px;
+  font-size: 1.1rem;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Scrollbar styling for team lists */
+.team-list-scroll::-webkit-scrollbar {
+  width: 7px;
+  background: #23272f;
+  border-radius: 8px;
+}
+.team-list-scroll::-webkit-scrollbar-thumb {
+  background: #e6394644;
+  border-radius: 8px;
+}
+.team-card:last-child .team-list-scroll::-webkit-scrollbar-thumb {
+  background: #457bff44;
+}

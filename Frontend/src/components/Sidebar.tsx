@@ -21,11 +21,23 @@ const Sidebar: React.FC<SidebarProps> = ({ icons, hovered, locked, onAreaEnter, 
   return (
     <div
       style={{
-        position: 'relative',
-        zIndex: 2,
-        height: '90vh',
-        maxHeight: 800,
-        minWidth: 0,
+        position: 'fixed', // Ensures sidebar is always fixed
+        top: 0,
+        left: 0,
+        zIndex: 200,
+        height: '100vh',
+        width: 80, // or your sidebar width
+        background: '#191c24',
+        boxShadow: '2px 0 12px #0002',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-between', // Distribute icons from top to bottom
+        padding: 0, // Remove extra padding
+        transition: 'left 180ms cubic-bezier(.77,0,.18,1)',
+        cursor: 'pointer',
+        overflow: 'visible',
+        willChange: 'left',
       }}
       onMouseEnter={onAreaEnter}
       onMouseLeave={onAreaLeave}
@@ -78,7 +90,15 @@ const Sidebar: React.FC<SidebarProps> = ({ icons, hovered, locked, onAreaEnter, 
             <img src="/Icons/R.jpg" alt="logo" style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
           </div>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 28, flex: 1, justifyContent: 'center', width: '100%' }}>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 18,
+          width: '100%',
+          flexGrow: 1,
+        }}>
+          {/* Render all sidebar icons here, with even spacing */}
           {icons.map((item, idx) => {
             if (item.label === 'Home') {
               return (
