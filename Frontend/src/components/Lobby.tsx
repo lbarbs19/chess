@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from "react-router-dom";
 import './Lobby.css';
+import TeamCard from './TeamCard';
 
 const TEAM_SIZE = 16;
 const TOTAL_PLAYERS = 34;
@@ -60,46 +61,26 @@ const Lobby: React.FC = () => {
         <div className="lobby-code">Lobby Code: <span style={{ fontFamily: 'monospace', fontSize: '2rem' }}>{code}</span></div>
       </div>
       <div className="lobby-main">
-        <div className="team-card">
-          <div className="team-title">Team 1</div>
-          <div className="team-list-scroll">
-            {Array.from({ length: TEAM_SIZE }).map((_, i) => (
-              <div className={`player-slot${team1[i] ? ' filled' : ''}${team1[i] === captain1 ? ' captain' : ''}`} key={i}>
-                <div className="avatar-circle">{team1[i] ? team1[i][0].toUpperCase() : '?'}</div>
-                <div className="player-name">
-                  {team1[i] || <span className="empty-slot">Empty Slot</span>}
-                  {team1[i] === captain1 && <span className="captain-badge">★ Captain</span>}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="team-actions">
-            <button onClick={() => addUser(1)}>Add Random User</button>
-            <button onClick={() => removeUser(1)} disabled={team1.length === 0}>Remove User</button>
-          </div>
-        </div>
+        <TeamCard
+          teamName="Team 1"
+          players={team1}
+          captain={captain1}
+          onAdd={() => addUser(1)}
+          onRemove={() => removeUser(1)}
+          disabledRemove={team1.length === 0}
+        />
         <div className="vs-center">
           <div className="vs-logo">VS</div>
           <button className="designate-captain-btn" onClick={() => designateCaptain(2)} disabled={team2.length === 0}>Designate Team 2 Captain</button>
         </div>
-        <div className="team-card">
-          <div className="team-title">Team 2</div>
-          <div className="team-list-scroll">
-            {Array.from({ length: TEAM_SIZE }).map((_, i) => (
-              <div className={`player-slot${team2[i] ? ' filled' : ''}${team2[i] === captain2 ? ' captain' : ''}`} key={i}>
-                <div className="avatar-circle">{team2[i] ? team2[i][0].toUpperCase() : '?'}</div>
-                <div className="player-name">
-                  {team2[i] || <span className="empty-slot">Empty Slot</span>}
-                  {team2[i] === captain2 && <span className="captain-badge">★ Captain</span>}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="team-actions">
-            <button onClick={() => addUser(2)}>Add Random User</button>
-            <button onClick={() => removeUser(2)} disabled={team2.length === 0}>Remove User</button>
-          </div>
-        </div>
+        <TeamCard
+          teamName="Team 2"
+          players={team2}
+          captain={captain2}
+          onAdd={() => addUser(2)}
+          onRemove={() => removeUser(2)}
+          disabledRemove={team2.length === 0}
+        />
       </div>
       <div className="lobby-footer">
         <span>{team1.length + team2.length} / {TOTAL_PLAYERS} players joined</span>

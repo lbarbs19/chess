@@ -6,27 +6,10 @@
   align-items: center;
   min-height: 100vh;
   width: 100vw;
-  background: linear-gradient(120deg, #1a1d2b 0%, #0d1b2a 100%);
   color: #fff;
   padding: 0 0 32px 0;
   box-sizing: border-box;
   overflow-x: hidden;
-}
-
-/* Sidebar should be fixed */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 80px; /* or your sidebar width */
-  z-index: 200;
-  background: #191c24;
-  box-shadow: 2px 0 12px #0002;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* ...existing sidebar styles... */
 }
 
 /* Make sure main content doesn't go under sidebar */
