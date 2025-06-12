@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import "./Home.css";
 
 function generateLobbyCode(length = 6) {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -13,6 +15,8 @@ function generateLobbyCode(length = 6) {
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const [joinCode, setJoinCode] = useState("");
+  const [createHover, setCreateHover] = useState(false);
+  const [joinHover, setJoinHover] = useState(false);
 
   const handleCreateLobby = () => {
     const code = generateLobbyCode();
@@ -27,23 +31,47 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh" }}>
-      <h1>Pawn Stars</h1>
-      <button onClick={handleCreateLobby} style={{ margin: "1rem", padding: "1rem 2rem", fontSize: "1.2rem" }}>Create Lobby</button>
-      <form onSubmit={handleJoinLobby} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <input
-          type="text"
-          placeholder="Enter Lobby Code"
-          value={joinCode}
-          onChange={e => setJoinCode(e.target.value)}
-          style={{ padding: "0.5rem", fontSize: "1rem", marginBottom: "0.5rem", textTransform: "uppercase" }}
-          maxLength={6}
-        />
-        <button type="submit" style={{ padding: "0.5rem 1.5rem", fontSize: "1rem" }}>Join Lobby</button>
-      </form>
-      <Link to="/chess" style={{ marginTop: '2rem', fontSize: '1.1rem', color: '#5ecb8c', textDecoration: 'underline', fontWeight: 600 }}>
-        Go to Classic Chess App
-      </Link>
+    <div className="pawnstars-home-bg">
+      <div className="pawnstars-home-card">
+        <h1 className="pawnstars-title">Pawn Stars</h1>
+        <p className="pawnstars-desc">
+          Play chess as a team! Create or join a lobby, then work together to control the pieces.
+        </p>
+        <motion.button
+          className="pawnstars-btn"
+          onClick={handleCreateLobby}
+          onMouseEnter={() => setCreateHover(true)}
+          onMouseLeave={() => setCreateHover(false)}
+          whileHover={{ scale: 1.09, boxShadow: "0 6px 24px #2dceef88", rotate: -2 }}
+          whileTap={{ scale: 0.97, rotate: 1 }}
+          transition={{ type: "spring", stiffness: 320, damping: 18 }}
+        >
+          Create Lobby
+        </motion.button>
+        <form onSubmit={handleJoinLobby} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+          <input
+            type="text"
+            placeholder="Enter Lobby Code"
+            value={joinCode}
+            onChange={e => setJoinCode(e.target.value)}
+            className="pawnstars-input"
+            maxLength={6}
+            autoFocus
+          />
+          <motion.button
+            type="submit"
+            className="pawnstars-btn"
+            style={{ margin: 0 }}
+            onMouseEnter={() => setJoinHover(true)}
+            onMouseLeave={() => setJoinHover(false)}
+            whileHover={{ scale: 1.09, boxShadow: "0 6px 24px #5ecb8c88", rotate: 2 }}
+            whileTap={{ scale: 0.97, rotate: -1 }}
+            transition={{ type: "spring", stiffness: 320, damping: 18 }}
+          >
+            Join Lobby
+          </motion.button>
+        </form>
+      </div>
     </div>
   );
 };

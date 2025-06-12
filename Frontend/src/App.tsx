@@ -5,6 +5,8 @@ import { sidebarIcons } from './components/SidebarIcons';
 import Home from './components/Home';
 import Lobby from './components/Lobby';
 import MainChessApp from './components/MainChessApp';
+import Profile from './components/Profile';
+import Settings from './components/Settings';
 import { useSidebar } from './hooks/useSidebar';
 import './App.css';
 
@@ -33,6 +35,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/lobby/:code" element={<Lobby />} />
             <Route path="/chess" element={<MainChessApp />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/settings" element={<Settings />} />
           </Routes>
         </div>
       </div>
