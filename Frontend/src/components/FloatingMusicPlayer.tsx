@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 const SPOTIFY_EMBED_URL = "https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator";
 
@@ -7,8 +8,12 @@ export default function FloatingMusicPlayer() {
   const [pos, setPos] = useState({ x: window.innerWidth - 360, y: window.innerHeight - 200 });
   const [dragging, setDragging] = useState(false);
   const [rel, setRel] = useState({ x: 0, y: 0 });
-  const [minimized, setMinimized] = useState(false); // Add minimized state
+  const [minimized, setMinimized] = useState(false);
   const widgetRef = useRef<HTMLDivElement | null>(null);
+  const dragStarted = useRef(false);
+  // Remove animating state, use local animating ref for drag/click separation
+  const [pendingMinimize, setPendingMinimize] = useState(false);
+  const [pendingExpand, setPendingExpand] = useState(false);
 
   // Only allow dragging from the header
   function onDragStart(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -17,16 +22,21 @@ export default function FloatingMusicPlayer() {
     const rect = widgetRef.current.getBoundingClientRect();
     setDragging(true);
     setRel({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    dragStarted.current = false;
     e.preventDefault();
   }
 
   useEffect(() => {
     function onMouseMove(e: MouseEvent) {
       if (!dragging) return;
+      // Allow dragging across the whole screen, not just a limited area
+      const widgetWidth = minimized ? 48 : 340;
+      const widgetHeight = minimized ? 48 : 200;
       setPos({
-        x: Math.max(12, Math.min(window.innerWidth - 360, e.clientX - rel.x)),
-        y: Math.max(12, Math.min(window.innerHeight - (minimized ? 40 : 200), e.clientY - rel.y)),
+        x: Math.max(0, Math.min(window.innerWidth - widgetWidth, e.clientX - rel.x)),
+        y: Math.max(0, Math.min(window.innerHeight - widgetHeight, e.clientY - rel.y)),
       });
+      dragStarted.current = true;
     }
     function onMouseUp() { setDragging(false); }
     if (dragging) {
@@ -39,74 +49,145 @@ export default function FloatingMusicPlayer() {
     };
   }, [dragging, rel, minimized]);
 
+  // Animation handlers
+  function handleMinimize() {
+    setPendingMinimize(true);
+  }
+  function handleExpand() {
+    setPendingExpand(true);
+  }
+
+  // Animation variants for Framer Motion
+  const variants = {
+    expanded: {
+      width: 340,
+      height: 200,
+      borderRadius: '18px',
+      background: 'rgba(35,39,47,0.98)',
+      transition: { type: "spring" as const, stiffness: 260, damping: 25 },
+    },
+    minimized: {
+      width: 48,
+      height: 48,
+      borderRadius: '50%',
+      background: '#1db954',
+      transition: { type: "spring" as const, stiffness: 260, damping: 25 },
+    },
+  };
+
+  // Handle animation completion
+  function handleAnimationComplete(definition: string) {
+    if (pendingMinimize && minimized === false) {
+      setMinimized(true);
+      setPendingMinimize(false);
+    }
+    if (pendingExpand && minimized === true) {
+      setMinimized(false);
+      setPendingExpand(false);
+    }
+  }
+
   return (
-    <div
+    <motion.div
       ref={widgetRef}
       style={{
         position: 'fixed',
         left: pos.x,
         top: pos.y,
-        width: 340,
-        background: 'rgba(35,39,47,0.98)',
-        borderRadius: 18,
         boxShadow: '0 4px 24px #0006',
         zIndex: 100,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        justifyContent: 'center',
         padding: 0,
         userSelect: 'none',
-        transition: 'box-shadow 0.15s',
-        height: minimized ? 40 : undefined, // Shrink height when minimized
+        overflow: 'hidden',
+        cursor: dragging ? 'grabbing' : minimized ? 'grab' : undefined,
       }}
       tabIndex={0}
-      aria-label="Floating Spotify player"
+      aria-label={minimized ? 'Expand Spotify player' : 'Floating Spotify player'}
+      initial={minimized ? 'minimized' : 'expanded'}
+      animate={pendingMinimize ? 'minimized' : pendingExpand ? 'expanded' : minimized ? 'minimized' : 'expanded'}
+      variants={variants}
+      onAnimationComplete={handleAnimationComplete}
+      onMouseDown={minimized ? onDragStart : undefined}
+      onClick={e => {
+        if (minimized && !dragging && !dragStarted.current && !pendingExpand) {
+          e.stopPropagation();
+          handleExpand();
+        }
+      }}
     >
-      <div
-        style={{
-          width: '100%',
-          height: 28,
-          cursor: dragging ? 'grabbing' : 'grab',
-          background: 'rgba(0,0,0,0.18)',
-          borderTopLeftRadius: 18,
-          borderTopRightRadius: 18,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between', // Space for button
-          fontWeight: 600,
-          color: '#fff',
-          letterSpacing: 1,
-          userSelect: 'none',
-          paddingLeft: 12,
-          paddingRight: 8,
+      {/* Spotify Logo: always rendered, fades in as minimized */}
+      <motion.svg
+        width="28" height="28" viewBox="0 0 28 28" fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        style={{ position: 'absolute', pointerEvents: 'none' }}
+        initial={false}
+        animate={{
+          opacity: minimized || pendingMinimize ? 1 : 0,
+          scale: minimized || pendingMinimize ? 1 : 0.7,
+          transition: { duration: 0.18 }
         }}
-        onMouseDown={onDragStart}
       >
-        <span>Spotify Player</span>
-        <button
-          onClick={e => { e.stopPropagation(); setMinimized(m => !m); }}
+        <circle cx="14" cy="14" r="14" fill="#1db954" />
+        <path d="M8.5 17.5C12 15.5 16 15.5 19.5 17.5" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+        <path d="M9.5 14C13 12.5 15.5 12.5 18.5 14" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+        <path d="M10.5 11C13.5 10 15 10 17.5 11" stroke="white" strokeWidth="1" strokeLinecap="round"/>
+      </motion.svg>
+      {/* Player content: fades out as minimized */}
+      <motion.div
+        style={{ width: '100%', height: '100%', display: minimized && !pendingExpand ? 'none' : 'flex', flexDirection: 'column' }}
+        initial={false}
+        animate={{
+          opacity: minimized || pendingMinimize ? 0 : 1,
+          scale: minimized || pendingMinimize ? 0.95 : 1,
+          transition: { duration: 0.18 }
+        }}
+      >
+        <div
           style={{
-            background: 'none',
-            border: 'none',
-            color: '#fff',
-            fontSize: 18,
-            cursor: 'pointer',
-            padding: 0,
-            marginLeft: 8,
-            width: 24,
-            height: 24,
-            lineHeight: 1,
-            borderRadius: 4,
-            transition: 'background 0.2s',
+            width: '100%',
+            height: 28,
+            cursor: dragging ? 'grabbing' : 'grab',
+            background: 'rgba(0,0,0,0.18)',
+            borderTopLeftRadius: 18,
+            borderTopRightRadius: 18,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end', // Remove text, align button right
+            userSelect: 'none',
+            paddingRight: 8,
+            boxSizing: 'border-box',
           }}
-          aria-label={minimized ? 'Expand player' : 'Minimize player'}
-          title={minimized ? 'Expand' : 'Minimize'}
+          onMouseDown={onDragStart}
         >
-          {minimized ? '▢' : '—'}
-        </button>
-      </div>
-      {/* Only show the iframe if not minimized */}
-      {!minimized && (
+          <button
+            onClick={e => { e.stopPropagation(); if (!pendingMinimize) handleMinimize(); }}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: '#fff',
+              fontSize: 22, // Slightly larger for visual balance
+              cursor: 'pointer',
+              padding: 0,
+              marginLeft: 0,
+              width: 24,
+              height: 24,
+              lineHeight: 1,
+              borderRadius: 4,
+              transition: 'background 0.2s',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            aria-label="Minimize player"
+            title="Minimize"
+          >
+            <span style={{fontWeight: 700, fontSize: 22, lineHeight: 1, display: 'block', marginTop: -2}}>–</span>
+          </button>
+        </div>
         <iframe
           style={{ borderRadius: 12, minWidth: 200, width: '100%' }}
           src={SPOTIFY_EMBED_URL}
@@ -117,7 +198,7 @@ export default function FloatingMusicPlayer() {
           loading="lazy"
           title="Spotify Player"
         />
-      )}
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
