@@ -1,39 +1,36 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { Chessboard } from 'react-chessboard';
 
-export default function ChessBoardWrapper({ boardWidth, fen, arrow, onMove }) {
-  // Sound refs
-  const moveSoundRef = useRef(null);
-  const captureSoundRef = useRef(null);
+interface ChessBoardWrapperProps {
+  boardWidth: number;
+  fen: string;
+  arrow: any;
+  onMove: (
+    sourceSquare: string,
+    targetSquare: string
+  ) => {
+    move: any;
+    isCapture?: boolean;
+    isCheck?: boolean;
+    isCastle?: boolean;
+  } | false;
+  playMoveSound?: (args: { isCheck?: boolean; isCapture?: boolean; isCastle?: boolean }) => void;
+}
 
-  useEffect(() => {
-    moveSoundRef.current = new window.Audio('/sound/move-self.mp3');
-    captureSoundRef.current = new window.Audio('/sound/capture.mp3');
-    moveSoundRef.current.load();
-    captureSoundRef.current.load();
-  }, []);
-
-  // Play move/capture sound
-  function playMoveSound(isCapture) {
-    if (isCapture) {
-      if (captureSoundRef.current) {
-        captureSoundRef.current.currentTime = 0;
-        captureSoundRef.current.play();
-      }
-    } else {
-      if (moveSoundRef.current) {
-        moveSoundRef.current.currentTime = 0;
-        moveSoundRef.current.play();
-      }
-    }
-  }
-
+export default function ChessBoardWrapper({ boardWidth, fen, arrow, onMove, playMoveSound }: ChessBoardWrapperProps) {
   // Handle piece drop and sound, then notify parent
-  function handleDrop(sourceSquare, targetSquare) {
-    // Parent must provide a function that returns { move, isCapture } or false
+  function handleDrop(sourceSquare: string, targetSquare: string) {
+    // Parent must provide a function that returns { move, isCapture, isCheck, isCastle } or false
     const result = onMove(sourceSquare, targetSquare);
     if (result && typeof result === 'object') {
-      playMoveSound(result.isCapture);
+      // Only play sound if playMoveSound is provided (for user moves, App.tsx will handle it)
+      if (playMoveSound) {
+        playMoveSound({
+          isCheck: !!result.isCheck,
+          isCapture: !!result.isCapture,
+          isCastle: !!result.isCastle,
+        });
+      }
       return !!result.move;
     }
     return false;
@@ -61,10 +58,10 @@ export default function ChessBoardWrapper({ boardWidth, fen, arrow, onMove }) {
       <Chessboard
         id="board1"
         boardWidth={boardWidth}
-        boardHeight={boardWidth}
         position={fen}
         onPieceDrop={handleDrop}
         customArrows={arrow}
+        // @ts-ignore: boardStyle is not a valid prop for react-chessboard, but kept for legacy style. Remove if not needed.
         boardStyle={{ borderRadius: 18, boxShadow: '0 2px 12px #0002', background: '#181b22', width: '100%', height: '100%' }}
       />
     </div>
