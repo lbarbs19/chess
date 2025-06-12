@@ -1,6 +1,12 @@
 import React from 'react';
 
-export default function SidebarButton({ icon, label, active }) {
+interface SidebarButtonProps {
+  icon: string | React.ReactNode;
+  label: string;
+  active: boolean;
+}
+
+export default function SidebarButton({ icon, label, active }: SidebarButtonProps) {
   const [hovered, setHovered] = React.useState(false);
   return (
     <div
@@ -28,7 +34,13 @@ export default function SidebarButton({ icon, label, active }) {
       onBlur={() => setHovered(false)}
       aria-label={label}
     >
-      <span>{icon}</span>
+      <span>
+        {typeof icon === 'string' && icon.match(/\.(png|jpg|jpeg|svg)$/i) ? (
+          <img src={icon} alt={label} style={{ width: 28, height: 28, objectFit: 'contain', display: 'block' }} />
+        ) : (
+          icon
+        )}
+      </span>
       <span style={{ fontSize: 10, marginTop: 2, letterSpacing: 0.5 }}>{label}</span>
     </div>
   );

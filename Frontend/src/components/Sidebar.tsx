@@ -69,30 +69,13 @@ const Sidebar: React.FC<SidebarProps> = ({ icons, hovered, locked, onAreaEnter, 
           userSelect: 'none',
           transition: 'box-shadow 0.15s',
         }}>
-          <span role="img" aria-label="logo">♛</span>
+          <img src="/Icons/R.jpg" alt="logo" style={{ width: 32, height: 32, borderRadius: '50%' }} />
         </div>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 28, flex: 1, justifyContent: 'center', width: '100%' }}>
         {icons.map((item, idx) => (
           <SidebarButton key={item.label} icon={item.icon} label={item.label} active={idx === 0} />
         ))}
-      </div>
-      <div style={{
-        width: 38,
-        height: 38,
-        borderRadius: '50%',
-        background: 'linear-gradient(135deg, #b0b8c1 0%, #23272f 100%)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: 20,
-        color: '#fff',
-        fontWeight: 700,
-        boxShadow: hovered ? '0 2px 8px #b0b8c144' : '0 1px 4px #0002',
-        userSelect: 'none',
-        transition: 'box-shadow 0.15s',
-      }}>
-        <span role="img" aria-label="avatar">👤</span>
       </div>
       <div
         style={{

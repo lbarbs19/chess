@@ -4,8 +4,9 @@ export interface SidebarIcon {
 }
 
 export const sidebarIcons: SidebarIcon[] = [
-  { icon: '🏠', label: 'Home' },
-  { icon: '♟️', label: 'Play' },
-  { icon: '📈', label: 'Analysis' },
-  { icon: '⚙️', label: 'Settings' },
+  { icon: '/Icons/Home.png', label: 'Home' },
+  { icon: '/Icons/Play.png', label: 'Play' },
+  { icon: '/Icons/Analysis.png', label: 'Analysis' },
+  { icon: '/Icons/Settings.png', label: 'Settings' },
+  { icon: '/Icons/Profile.png', label: 'Profile' },
 ];

@@ -7,6 +7,7 @@ export default function FloatingMusicPlayer() {
   const [pos, setPos] = useState({ x: window.innerWidth - 360, y: window.innerHeight - 200 });
   const [dragging, setDragging] = useState(false);
   const [rel, setRel] = useState({ x: 0, y: 0 });
+  const [minimized, setMinimized] = useState(false); // Add minimized state
   const widgetRef = useRef<HTMLDivElement | null>(null);
 
   // Only allow dragging from the header
@@ -24,7 +25,7 @@ export default function FloatingMusicPlayer() {
       if (!dragging) return;
       setPos({
         x: Math.max(12, Math.min(window.innerWidth - 360, e.clientX - rel.x)),
-        y: Math.max(12, Math.min(window.innerHeight - 200, e.clientY - rel.y)),
+        y: Math.max(12, Math.min(window.innerHeight - (minimized ? 40 : 200), e.clientY - rel.y)),
       });
     }
     function onMouseUp() { setDragging(false); }
@@ -36,7 +37,7 @@ export default function FloatingMusicPlayer() {
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mouseup', onMouseUp);
     };
-  }, [dragging, rel]);
+  }, [dragging, rel, minimized]);
 
   return (
     <div
@@ -56,6 +57,7 @@ export default function FloatingMusicPlayer() {
         padding: 0,
         userSelect: 'none',
         transition: 'box-shadow 0.15s',
+        height: minimized ? 40 : undefined, // Shrink height when minimized
       }}
       tabIndex={0}
       aria-label="Floating Spotify player"
@@ -70,26 +72,52 @@ export default function FloatingMusicPlayer() {
           borderTopRightRadius: 18,
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: 'space-between', // Space for button
           fontWeight: 600,
           color: '#fff',
           letterSpacing: 1,
           userSelect: 'none',
+          paddingLeft: 12,
+          paddingRight: 8,
         }}
         onMouseDown={onDragStart}
       >
-        Spotify Player
+        <span>Spotify Player</span>
+        <button
+          onClick={e => { e.stopPropagation(); setMinimized(m => !m); }}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: '#fff',
+            fontSize: 18,
+            cursor: 'pointer',
+            padding: 0,
+            marginLeft: 8,
+            width: 24,
+            height: 24,
+            lineHeight: 1,
+            borderRadius: 4,
+            transition: 'background 0.2s',
+          }}
+          aria-label={minimized ? 'Expand player' : 'Minimize player'}
+          title={minimized ? 'Expand' : 'Minimize'}
+        >
+          {minimized ? '▢' : '—'}
+        </button>
       </div>
-      <iframe
-        style={{ borderRadius: 12, minWidth: 200, width: '100%' }}
-        src={SPOTIFY_EMBED_URL}
-        width="100%"
-        height={152}
-        frameBorder="0"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy"
-        title="Spotify Player"
-      />
+      {/* Only show the iframe if not minimized */}
+      {!minimized && (
+        <iframe
+          style={{ borderRadius: 12, minWidth: 200, width: '100%' }}
+          src={SPOTIFY_EMBED_URL}
+          width="100%"
+          height={152}
+          frameBorder="0"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+          title="Spotify Player"
+        />
+      )}
     </div>
   );
 }
