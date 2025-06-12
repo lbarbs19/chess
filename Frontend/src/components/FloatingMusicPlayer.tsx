@@ -70,7 +70,7 @@ export default function FloatingMusicPlayer() {
       width: 48,
       height: 48,
       borderRadius: '50%',
-      background: '#1db954',
+      background: '#191414', // Spotify dark gray
       transition: { type: "spring" as const, stiffness: 260, damping: 25 },
     },
   };
@@ -120,25 +120,30 @@ export default function FloatingMusicPlayer() {
       }}
     >
       {/* Spotify Logo: always rendered, fades in as minimized */}
-      <motion.svg
-        width="28" height="28" viewBox="0 0 28 28" fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        style={{ position: 'absolute', pointerEvents: 'none' }}
+      <motion.img
+        src="/spotify-2-logo-svg-vector.svg"
+        alt="Spotify logo"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          margin: 'auto',
+          pointerEvents: 'none',
+          width: 28,
+          height: 28,
+          objectFit: 'cover',
+          aspectRatio: '1 / 1',
+          borderRadius: '50%',
+        }}
         initial={false}
         animate={{
           opacity: minimized || pendingMinimize ? 1 : 0,
           scale: minimized || pendingMinimize ? 1 : 0.7,
           transition: { duration: 0.18 }
         }}
-      >
-        <circle cx="14" cy="14" r="14" fill="#1db954" />
-        <path d="M8.5 17.5C12 15.5 16 15.5 19.5 17.5" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-        <path d="M9.5 14C13 12.5 15.5 12.5 18.5 14" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-        <path d="M10.5 11C13.5 10 15 10 17.5 11" stroke="white" strokeWidth="1" strokeLinecap="round"/>
-      </motion.svg>
-      {/* Player content: fades out as minimized */}
+      />
+      {/* Player content: fades out as minimized, but always mounted to keep iframe loaded */}
       <motion.div
-        style={{ width: '100%', height: '100%', display: minimized && !pendingExpand ? 'none' : 'flex', flexDirection: 'column' }}
+        style={{ width: '100%', height: '100%', position: 'relative', pointerEvents: minimized && !pendingExpand ? 'none' : 'auto', zIndex: 1, flexDirection: 'column', display: 'flex' }}
         initial={false}
         animate={{
           opacity: minimized || pendingMinimize ? 0 : 1,
@@ -156,7 +161,7 @@ export default function FloatingMusicPlayer() {
             borderTopRightRadius: 18,
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'flex-end', // Remove text, align button right
+            justifyContent: 'flex-end',
             userSelect: 'none',
             paddingRight: 8,
             boxSizing: 'border-box',
@@ -169,7 +174,7 @@ export default function FloatingMusicPlayer() {
               background: 'none',
               border: 'none',
               color: '#fff',
-              fontSize: 22, // Slightly larger for visual balance
+              fontSize: 22,
               cursor: 'pointer',
               padding: 0,
               marginLeft: 0,
@@ -189,7 +194,7 @@ export default function FloatingMusicPlayer() {
           </button>
         </div>
         <iframe
-          style={{ borderRadius: 12, minWidth: 200, width: '100%' }}
+          style={{ borderRadius: 12, minWidth: 200, width: '100%', display: 'block' }}
           src={SPOTIFY_EMBED_URL}
           width="100%"
           height={152}
