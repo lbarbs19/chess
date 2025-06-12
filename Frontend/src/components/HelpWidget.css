@@ -1,0 +1,84 @@
+.help-widget-container {
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.help-widget-question {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #2dceef 0%, #5ecb8c 100%);
+  color: #23272f;
+  font-size: 2.1rem;
+  font-weight: 900;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px #5ecb8c33;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  transition: box-shadow 0.18s, background 0.18s;
+}
+
+.help-widget-tooltip {
+  margin-top: 10px;
+  margin-right: -36px; /* Move tooltip further right so it doesn't touch the welcome box */
+  background: rgba(35,39,47,0.98);
+  color: #f3f3f3;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px #0006;
+  padding: 1.1rem 1.5rem 1.2rem 1.5rem;
+  min-width: 260px;
+  max-width: 320px;
+  font-size: 1.04rem;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  pointer-events: none;
+  line-height: 1.6;
+}
+
+.help-widget-title {
+  font-size: 1.18rem;
+  font-weight: 800;
+  color: #5ecb8c;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+.help-widget-list {
+  margin: 0;
+  padding-left: 1.1em;
+  color: #eaeaea;
+  font-size: 1rem;
+}
+
+.help-widget-list li {
+  margin-bottom: 0.3em;
+  font-weight: 500;
+}
+
+.help-widget-ol {
+  list-style: decimal inside;
+  padding-left: 0.5em;
+  margin: 0;
+  color: #eaeaea;
+  font-size: 1rem;
+  counter-reset: item;
+}
+
+.help-widget-ol li {
+  margin-bottom: 0.3em;
+  font-weight: 500;
+  padding-left: 0.2em;
+  position: relative;
+  line-height: 1.5;
+}
+
+.help-widget-ol li b {
+  color: #5ecb8c;
+  font-weight: 700;
+}

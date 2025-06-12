@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./Home.css";
+import HelpWidget from './HelpWidget';
 
 function generateLobbyCode(length = 6) {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -32,10 +33,11 @@ const Home: React.FC = () => {
 
   return (
     <div className="pawnstars-home-bg">
+      <HelpWidget />
       <div className="pawnstars-home-card">
         <h1 className="pawnstars-title">Pawn Stars</h1>
         <p className="pawnstars-desc">
-          Play chess as a team! Create or join a lobby, then work together to control the pieces.
+          Play chess as a team - Create a lobby to captain a team, or join the battle as your own piece.
         </p>
         <motion.button
           className="pawnstars-btn"

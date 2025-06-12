@@ -16,6 +16,7 @@
     "react-chessboard": "^4.7.3",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.2",
+    "react-spotlight": "^1.1.0",
     "stockfish.wasm": "^0.10.0"
   },
   "devDependencies": {
