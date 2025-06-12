@@ -54,22 +54,27 @@ const Sidebar: React.FC<SidebarProps> = ({ icons, hovered, locked, onAreaEnter, 
       }}
     >
       <div style={{ marginBottom: 16 }}>
-        <div style={{
-          width: 44,
-          height: 44,
-          borderRadius: '50%',
-          background: 'linear-gradient(135deg, #5ecb8c 0%, #2d3340 100%)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: 28,
-          fontWeight: 900,
-          color: '#fff',
-          boxShadow: hovered ? '0 4px 16px #5ecb8c44' : '0 2px 8px #0002',
-          userSelect: 'none',
-          transition: 'box-shadow 0.15s',
-        }}>
-          <img src="/Icons/R.jpg" alt="logo" style={{ width: 32, height: 32, borderRadius: '50%' }} />
+        {/* Modernized profile image with circular gradient background and hover effects */}
+        <div
+          style={{
+            width: 44,
+            height: 44,
+            borderRadius: '50%',
+            background: 'linear-gradient(135deg, #5ecb8c 0%, #2d3340 100%)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 28,
+            fontWeight: 900,
+            color: '#fff',
+            transition: 'transform 0.2s, box-shadow 0.2s',
+            cursor: 'pointer',
+            marginBottom: 8,
+          }}
+          onMouseEnter={() => {}}
+          onMouseLeave={() => {}}
+        >
+          <img src="/Icons/R.jpg" alt="logo" style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
         </div>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 28, flex: 1, justifyContent: 'center', width: '100%' }}>

@@ -111,7 +111,7 @@ export default function FloatingMusicPlayer() {
       animate={pendingMinimize ? 'minimized' : pendingExpand ? 'expanded' : minimized ? 'minimized' : 'expanded'}
       variants={variants}
       onAnimationComplete={handleAnimationComplete}
-      onMouseDown={minimized ? onDragStart : undefined}
+      onMouseDown={onDragStart}
       onClick={e => {
         if (minimized && !dragging && !dragStarted.current && !pendingExpand) {
           e.stopPropagation();
@@ -151,7 +151,7 @@ export default function FloatingMusicPlayer() {
           transition: { duration: 0.18 }
         }}
       >
-        <div
+        <motion.div
           style={{
             width: '100%',
             height: 28,
@@ -165,10 +165,17 @@ export default function FloatingMusicPlayer() {
             userSelect: 'none',
             paddingRight: 8,
             boxSizing: 'border-box',
+            position: 'relative',
+            overflow: 'hidden',
           }}
-          onMouseDown={onDragStart}
+          initial={false}
+          animate={{
+            y: minimized || pendingMinimize ? -20 : 0,
+            opacity: minimized || pendingMinimize ? 0 : 1,
+            transition: { type: 'spring', stiffness: 320, damping: 30, duration: 0.22 }
+          }}
         >
-          <button
+          <motion.button
             onClick={e => { e.stopPropagation(); if (!pendingMinimize) handleMinimize(); }}
             style={{
               background: 'none',
@@ -186,13 +193,24 @@ export default function FloatingMusicPlayer() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              position: 'relative',
+              zIndex: 2,
             }}
+            whileHover={{ scale: 1.15, backgroundColor: 'rgba(255,255,255,0.08)' }}
+            whileTap={{ scale: 0.92 }}
             aria-label="Minimize player"
             title="Minimize"
           >
-            <span style={{fontWeight: 700, fontSize: 22, lineHeight: 1, display: 'block', marginTop: -2}}>–</span>
-          </button>
-        </div>
+            <motion.span
+              style={{fontWeight: 700, fontSize: 22, lineHeight: 1, display: 'block', marginTop: -2}}
+              initial={false}
+              animate={{
+                rotate: minimized || pendingMinimize ? 90 : 0,
+                transition: { type: 'spring', stiffness: 320, damping: 30, duration: 0.22 }
+              }}
+            >–</motion.span>
+          </motion.button>
+        </motion.div>
         <iframe
           style={{ borderRadius: 12, minWidth: 200, width: '100%', display: 'block' }}
           src={SPOTIFY_EMBED_URL}

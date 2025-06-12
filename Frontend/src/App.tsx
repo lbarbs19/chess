@@ -25,6 +25,9 @@ function App() {
   const [showEval, setShowEval] = useState<boolean>(true); // Controls eval bar
   const [showArrows, setShowArrows] = useState<boolean>(true); // Controls arrows
   const showArrowsRef = useRef(showArrows);
+  useEffect(() => {
+    showArrowsRef.current = showArrows;
+  }, [showArrows]);
   const [evalScore, setEvalScore] = useState<number>(0);
   const [evalDisplay, setEvalDisplay] = useState<string>('0.00');
   const [maxDepth, setMaxDepth] = useState<number>(20); // For depth slider
@@ -36,6 +39,7 @@ function App() {
   const bestMoveAtMaxDepthRef = useRef<string>('');
   const lastMoveByComputer = useRef<boolean>(false);
   const SLIDER_MIN = -10, SLIDER_MAX = 10;
+  const [lastBestMove, setLastBestMove] = useState<any[] | null>(null);
 
   // --- Sound effect refs and logic (moved from ChessBoardWrapper) ---
   const moveSoundRef = useRef<HTMLAudioElement | null>(null);
@@ -151,7 +155,12 @@ function App() {
     setEvalScore,
     setEvalDisplay,
     setEngineOutput,
-    setArrow,
+    setArrow: (arrows: any[]) => {
+      setArrow(arrows);
+      if (arrows && arrows.length && arrows[0][0] && arrows[0][1]) {
+        setLastBestMove([arrows[0][0], arrows[0][1], arrows[0][2] || 'blue']);
+      }
+    },
     bestMoveRef,
     bestMoveAtMaxDepthRef,
     workerRef,
@@ -171,6 +180,15 @@ function App() {
     computerWorkerRef,
     playMoveSound, // pass sound effect function for computer moves
   });
+
+  // When showArrows is toggled ON, immediately show the last best move arrow if available
+  useEffect(() => {
+    if (showArrows && lastBestMove) {
+      setArrow([lastBestMove]);
+    } else if (!showArrows) {
+      setArrow([]);
+    }
+  }, [showArrows, lastBestMove]);
 
   return (
     <div style={{

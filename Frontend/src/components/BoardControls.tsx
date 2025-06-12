@@ -54,8 +54,8 @@ const BoardControls: React.FC<BoardControlsProps> = ({
       alignItems: 'stretch',
       marginBottom: 18
     }}>
-      <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 6, color: '#fff', letterSpacing: 0.5 }}>Engine Controls</div>
-      <div style={{ fontFamily: 'monospace', fontSize: 16, whiteSpace: 'pre', minHeight: 40, maxHeight: 48, display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#22252b', borderRadius: 8, padding: 8, boxShadow: '0 1px 4px #0001', marginBottom: 8 }}>
+      <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 6, color: '#fff', letterSpacing: 0.5, textAlign: 'center' }}>Engine Controls</div>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontFamily: 'monospace', fontSize: 16, whiteSpace: 'pre', minHeight: 40, maxHeight: 48, background: '#22252b', borderRadius: 8, padding: 8, boxShadow: '0 1px 4px #0001', marginBottom: 8 }}>
         {engineOutput?.split('\n')[0] || 'Depth: ...'}
       </div>
       <EngineControls

@@ -27,7 +27,7 @@ export default function ComputerControls({ computerMode, setComputerMode, comput
       marginLeft: 0,
       fontWeight: 600,
     }}>
-      <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 6, color: '#fff', letterSpacing: 0.5 }}>Play Against CPU</div>
+      <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 6, color: '#fff', letterSpacing: 0.5, textAlign: 'center' }}>Play Against CPU</div>
       <ToggleSwitch
         checked={computerMode}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setComputerMode(e.target.checked)}
@@ -47,7 +47,7 @@ export default function ComputerControls({ computerMode, setComputerMode, comput
         />
         <span>{computerDepth}</span>
       </div>
-      <div style={{ fontSize: 13, color: '#b0b8c1', marginTop: 8, lineHeight: 1.3 }}>
+      <div style={{ fontSize: 13, color: '#b0b8c1', marginTop: 8, lineHeight: 1.3, textAlign: 'center' }}>
         When enabled, the computer will play as Black using its own engine and depth.
       </div>
     </div>
