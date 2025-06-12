@@ -174,23 +174,16 @@ function App() {
 
   return (
     <div style={{
-      minHeight: '100vh',
-      minWidth: '100vw',
-      width: '100vw',
-      height: '100vh',
-      background: 'linear-gradient(135deg, #23272f 0%, #2d3340 100%)',
       display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      overflow: 'auto',
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      zIndex: 0
+      flexDirection: 'row',
+      alignItems: 'stretch',
+      justifyContent: 'flex-start',
+      minHeight: '100vh',
+      width: '100vw',
+      overflow: 'hidden',
+      position: 'relative',
     }}>
-      {/* Floating music player widget */}
-      <FloatingMusicPlayer />
-      {/* Sidebar area */}
+      {/* Sidebar at the very left edge, flush with top and bottom */}
       <Sidebar
         icons={sidebarIcons}
         hovered={sidebarHovered}
@@ -199,57 +192,65 @@ function App() {
         onAreaLeave={handleSidebarAreaLeave}
         onTabClick={handleSidebarTabClick}
       />
-      {/* Main content */}
+      {/* Main content area, takes up remaining space */}
       <div style={{
-        position: 'relative',
+        flex: 1,
         display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-        gap: 0,
+        flexDirection: 'column',
+        minHeight: '100vh',
+        position: 'relative',
+        alignItems: 'center',
+        justifyContent: 'center',
         width: '100%',
         maxWidth: 1200,
-        justifyContent: 'center',
         margin: '0 auto',
         padding: '32px 0',
         zIndex: 1
       }}>
-        {/* Eval bar overlays left of board, absolutely positioned and aligned with the top of the board */}
-        <EvalBarOverlay
-          engineOn={engineOn}
-          showEval={showEval}
-          evalScore={evalScore}
-          evalDisplay={evalDisplay}
-          SLIDER_MIN={SLIDER_MIN}
-          SLIDER_MAX={SLIDER_MAX}
-          boardWidth={boardWidth}
-        />
-        {/* Board */}
-        <ChessBoardWrapper
-          boardWidth={boardWidth}
-          fen={fen}
-          onMove={handleBoardMove}
-          arrow={arrow}
-          playMoveSound={playMoveSound}
-        />
-        {/* Controls column: stack engine controls and computer controls vertically */}
-        <BoardControls
-          engineOn={engineOn}
-          setEngineOn={setEngineOn}
-          showEval={showEval}
-          setShowEval={setShowEval}
-          showArrows={showArrows}
-          setShowArrows={setShowArrows}
-          maxDepth={maxDepth}
-          setMaxDepth={setMaxDepth}
-          engineOutput={engineOutput}
-          moveIndex={moveIndex}
-          moveHistory={moveHistory}
-          goToMove={goToMove}
-          computerMode={computerMode}
-          setComputerMode={setComputerMode}
-          computerDepth={computerDepth}
-          setComputerDepth={setComputerDepth}
-        />
+        {/* Floating music player widget (inside main content) */}
+        <FloatingMusicPlayer />
+        <div style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'flex-start',
+          width: '100%',
+          justifyContent: 'center',
+        }}>
+          <EvalBarOverlay
+            engineOn={engineOn}
+            showEval={showEval}
+            evalScore={evalScore}
+            evalDisplay={evalDisplay}
+            SLIDER_MIN={SLIDER_MIN}
+            SLIDER_MAX={SLIDER_MAX}
+            boardWidth={boardWidth}
+          />
+          <ChessBoardWrapper
+            boardWidth={boardWidth}
+            fen={fen}
+            onMove={handleBoardMove}
+            arrow={arrow}
+            playMoveSound={playMoveSound}
+          />
+          <BoardControls
+            engineOn={engineOn}
+            setEngineOn={setEngineOn}
+            showEval={showEval}
+            setShowEval={setShowEval}
+            showArrows={showArrows}
+            setShowArrows={setShowArrows}
+            maxDepth={maxDepth}
+            setMaxDepth={setMaxDepth}
+            engineOutput={engineOutput}
+            moveIndex={moveIndex}
+            moveHistory={moveHistory}
+            goToMove={goToMove}
+            computerMode={computerMode}
+            setComputerMode={setComputerMode}
+            computerDepth={computerDepth}
+            setComputerDepth={setComputerDepth}
+          />
+        </div>
       </div>
     </div>
   );
