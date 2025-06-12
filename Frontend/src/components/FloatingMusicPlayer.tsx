@@ -8,7 +8,7 @@ export default function FloatingMusicPlayer() {
   const [pos, setPos] = useState({ x: window.innerWidth - 360, y: window.innerHeight - 200 });
   const [dragging, setDragging] = useState(false);
   const [rel, setRel] = useState({ x: 0, y: 0 });
-  const [minimized, setMinimized] = useState(false);
+  const [minimized, setMinimized] = useState(true);
   const widgetRef = useRef<HTMLDivElement | null>(null);
   const dragStarted = useRef(false);
   // Remove animating state, use local animating ref for drag/click separation
