@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>Stockfish Worker Test</h2>
+    <pre id="output"></pre>
+    <script>
+      const output = document.getElementById('output');
+      try {
+        const worker = new Worker('stockfish.js', { type: 'classic' });
+        worker.onmessage = (e) => {
+          output.textContent += e.data + '\n';
+        };
+        worker.onerror = (e) => {
+          output.textContent += 'Worker error: ' + e.message + '\n';
+        };
+        worker.postMessage('uci');
+        worker.postMessage('isready');
+      } catch (err) {
+        output.textContent = 'Failed to start worker: ' + err.message;
+      }
+    </script>
+  </body>
+</html>
