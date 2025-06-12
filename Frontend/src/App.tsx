@@ -87,22 +87,23 @@ function App() {
   // Board move handler
   function handleBoardMove(sourceSquare: string, targetSquare: string) {
     try {
-      const newGame = new Chess(fen);
-      const moveObj = newGame.moves({ verbose: true }).find((m: any) => m.from === sourceSquare && m.to === targetSquare);
+      // Use the existing game instance instead of recreating from FEN
+      const updatedGame = new Chess(game.fen());
+      const moveObj = updatedGame.moves({ verbose: true }).find((m: any) => m.from === sourceSquare && m.to === targetSquare);
       const isCapture = !!(moveObj && (moveObj.captured || moveObj.flags.includes('e')));
       const isCastle = !!(moveObj && (moveObj.flags.includes('k') || moveObj.flags.includes('q')));
-      const move = newGame.move({ from: sourceSquare, to: targetSquare, promotion: "q" });
+      const move = updatedGame.move({ from: sourceSquare, to: targetSquare, promotion: "q" });
       if (!move) return false;
       // Check if the move results in check
-      const isCheck = newGame.inCheck();
+      const isCheck = updatedGame.inCheck();
       // Play sound for user move
       playMoveSound({ isCheck, isCapture, isCastle });
       bestMoveRef.current = '';
       bestMoveAtMaxDepthRef.current = '';
       lastMoveByComputer.current = false;
-      const newFen = newGame.fen();
+      const newFen = updatedGame.fen();
       setFen(newFen);
-      setGame(newGame);
+      setGame(updatedGame);
       const newHistory = moveHistory.slice(0, moveIndex + 1).concat([newFen]);
       setMoveHistory(newHistory);
       setMoveIndex(newHistory.length - 1);
