@@ -465,11 +465,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Luke\\Documents\\Resume Projects\\GlobalChat\\Backend\\WebApplication1.csproj",
+      "projectUniqueName": "C:\\Users\\Luke\\Documents\\Resume Projects\\VibeChess\\Backend\\WebApplication1.csproj",
       "projectName": "WebApplication1",
-      "projectPath": "C:\\Users\\Luke\\Documents\\Resume Projects\\GlobalChat\\Backend\\WebApplication1.csproj",
+      "projectPath": "C:\\Users\\Luke\\Documents\\Resume Projects\\VibeChess\\Backend\\WebApplication1.csproj",
       "packagesPath": "C:\\Users\\Luke\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Luke\\Documents\\Resume Projects\\GlobalChat\\Backend\\obj\\",
+      "outputPath": "C:\\Users\\Luke\\Documents\\Resume Projects\\VibeChess\\Backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Luke\\AppData\\Roaming\\NuGet\\NuGet.Config",

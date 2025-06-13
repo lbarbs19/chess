@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Luke\\Documents\\Resume Projects\\globalchat\\Backend\\WebApplication1.csproj": {}
+    "C:\\Users\\Luke\\Documents\\Resume Projects\\VibeChess\\Backend\\WebApplication1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Luke\\Documents\\Resume Projects\\globalchat\\Backend\\WebApplication1.csproj": {
+    "C:\\Users\\Luke\\Documents\\Resume Projects\\VibeChess\\Backend\\WebApplication1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Luke\\Documents\\Resume Projects\\globalchat\\Backend\\WebApplication1.csproj",
+        "projectUniqueName": "C:\\Users\\Luke\\Documents\\Resume Projects\\VibeChess\\Backend\\WebApplication1.csproj",
         "projectName": "WebApplication1",
-        "projectPath": "C:\\Users\\Luke\\Documents\\Resume Projects\\globalchat\\Backend\\WebApplication1.csproj",
+        "projectPath": "C:\\Users\\Luke\\Documents\\Resume Projects\\VibeChess\\Backend\\WebApplication1.csproj",
         "packagesPath": "C:\\Users\\Luke\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Luke\\Documents\\Resume Projects\\globalchat\\Backend\\obj\\",
+        "outputPath": "C:\\Users\\Luke\\Documents\\Resume Projects\\VibeChess\\Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Luke\\AppData\\Roaming\\NuGet\\NuGet.Config",
