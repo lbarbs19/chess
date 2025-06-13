@@ -21,9 +21,7 @@ const EvalBarOverlay: React.FC<EvalBarOverlayProps> = ({
   engineOn,
 }) => (
   <div style={{
-    position: 'absolute',
-    left: 'calc(50% - ' + (boardWidth / 2 + 48 + 140) + 'px)',
-    top: 32,
+    // Remove absolute positioning and top offset
     height: boardWidth,
     display: 'flex',
     alignItems: 'center',
