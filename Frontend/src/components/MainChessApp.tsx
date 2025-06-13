@@ -165,13 +165,12 @@ function MainChessApp() {
       setArrow([]);
     }
   }, [showArrows, lastBestMove]);
-
   return (
     <div style={{
       flex: 1,
       display: 'flex',
       flexDirection: 'column',
-      minHeight: '100vh',
+      height: '100%',
       position: 'relative',
       alignItems: 'center',
       justifyContent: 'center',
