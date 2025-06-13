@@ -31,7 +31,6 @@ const Sidebar: React.FC<SidebarProps> = ({ icons, hovered, locked, onAreaEnter, 
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-between', // Distribute icons from top to bottom
-        padding: 0, // Remove extra padding
         transition: 'left 180ms cubic-bezier(.77,0,.18,1)',
         cursor: 'pointer',
         overflow: 'visible',

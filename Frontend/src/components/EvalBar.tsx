@@ -20,7 +20,6 @@ export default function EvalBar({ show, evalScore, evalDisplay, SLIDER_MIN, SLID
       width: 48,
       height: boardWidth,
       minHeight: 240,
-      maxHeight: 900,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
