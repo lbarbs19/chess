@@ -34,6 +34,7 @@ const Sidebar: React.FC<SidebarProps> = ({ icons, hovered, locked, onAreaEnter, 
         cursor: 'pointer',
         overflow: 'visible',
         willChange: 'left',
+        
       }}
       onMouseEnter={onAreaEnter}
       onMouseLeave={onAreaLeave}
@@ -43,50 +44,28 @@ const Sidebar: React.FC<SidebarProps> = ({ icons, hovered, locked, onAreaEnter, 
     >      <div
         style={{
           position: 'absolute',
-          left: (hovered || locked) ? 0 : -64,
+          left: (hovered || locked) ? 0 : -90,
           top: '50%',
           transform: 'translateY(-50%)',
-          width: 80,
-          minWidth: 80,
-          height: '100%', // Let content determine height
+          width: 100,
+          height: 'auto', // Let content determine height
           maxHeight: '80vh', // Prevent overflow on small screens
-          background: 'rgba(35,39,47,0.98)',
+          background: 'rgba(35,39,47,0.15)',
+          backdropFilter: 'blur(5px)',
+          WebkitBackdropFilter: 'blur(5px)',
+          border: '1px solid rgba(255,255,255,0.1)',
           borderRadius: 22,
           margin: 0,
-          boxShadow: '0 4px 24px #0004',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '24px 0 18px 0',
-          transition: 'left 180ms cubic-bezier(.77,0,.18,1), transform 180ms cubic-bezier(.77,0,.18,1)',
-          cursor: 'pointer',
-          overflow: 'visible',
-          willChange: 'left',
+          padding: '64px 0 64px 0',
+          transition: 'left 180ms cubic-bezier(.77,0,.18,1), transform 180ms cubic-bezier(.77,0,.18,1)',          overflow: 'visible',
+          //willChange: 'left',
         }}
       >
-        <div style={{ marginBottom: 16 }}>
-          {/* Modernized profile image with circular gradient background and hover effects */}
-          <div
-            style={{
-              width: 44,
-              height: 44,
-              borderRadius: '50%',
-              background: 'linear-gradient(135deg, #5ecb8c 0%, #2d3340 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: 28,
-              fontWeight: 900,
-              color: '#fff',
-              transition: 'transform 0.2s, box-shadow 0.2s',
-              cursor: 'pointer',
-              marginBottom: 8,
-            }}
-          >
-            <img src="/Icons/R.jpg" alt="logo" style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
-          </div>
-        </div>
         <div style={{
           display: 'flex',
           flexDirection: 'column',

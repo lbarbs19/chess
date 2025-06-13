@@ -32,7 +32,7 @@
   filter: blur(1px);
   opacity: 0.4;
   z-index: -1;
-  animation: chessboardMove 20s linear infinite;
+  animation: chessboardMove 5s linear infinite;
 }
 
 @keyframes chessboardMove {
