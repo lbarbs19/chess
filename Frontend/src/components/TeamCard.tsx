@@ -9,7 +9,7 @@ interface TeamCardProps {
   disabledRemove: boolean;
 }
 
-const TEAM_SIZE = 16;
+const TEAM_SIZE = 17;
 
 const TeamCard: React.FC<TeamCardProps> = ({ teamName, players, captain, onAdd, onRemove, disabledRemove }) => (
   <div className="team-card">

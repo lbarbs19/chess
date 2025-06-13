@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import './Lobby.css';
 import TeamCard from './TeamCard';
 
-const TEAM_SIZE = 16;
+const TEAM_SIZE = 17;
 const TOTAL_PLAYERS = 34;
 const RANDOM_NAMES = [
   'ChessChad', 'PawnStar', 'QueenBee', 'KnightRider', 'BishopBasher', 'RookRoller',
@@ -17,7 +17,12 @@ const RANDOM_NAMES = [
 function getRandomName(used: string[]) {
   let name;
   do {
-    name = RANDOM_NAMES[Math.floor(Math.random() * RANDOM_NAMES.length)] + Math.floor(Math.random() * 1000);
+    const baseName = RANDOM_NAMES[Math.floor(Math.random() * RANDOM_NAMES.length)];
+    const randomNum = Math.floor(Math.random() * 1000);
+    const fullName = baseName + randomNum;
+    
+    // Limit to 12 characters
+    name = fullName.length > 12 ? fullName.substring(0, 12) : fullName;
   } while (used.includes(name));
   return name;
 }
@@ -55,9 +60,8 @@ const Lobby: React.FC = () => {
   }
 
   return (
-    <div className="lobby-root">
-      <div className="lobby-header">
-        <h1>Lobby</h1>
+    <div className="lobby-root">      <div className="lobby-header">
+        <h1>Are you ready?</h1>
         <div className="lobby-code">Lobby Code: <span style={{ fontFamily: 'monospace', fontSize: '2rem' }}>{code}</span></div>
       </div>
       <div className="lobby-main">
@@ -68,8 +72,7 @@ const Lobby: React.FC = () => {
           onAdd={() => addUser(1)}
           onRemove={() => removeUser(1)}
           disabledRemove={team1.length === 0}
-        />
-        <div className="vs-center">
+        />        <div className="vs-center">
           <div className="vs-logo">VS</div>
           <button className="designate-captain-btn" onClick={() => designateCaptain(2)} disabled={team2.length === 0}>Designate Team 2 Captain</button>
         </div>

@@ -1,7 +1,7 @@
 .help-widget-container {
   position: absolute;
   top: 32px;
-  right: 32px;
+  right: 64px;
   z-index: 20;
   display: flex;
   flex-direction: column;
@@ -27,7 +27,6 @@
 
 .help-widget-tooltip {
   margin-top: 10px;
-  margin-right: -36px; /* Move tooltip further right so it doesn't touch the welcome box */
   background: rgba(35,39,47,0.98);
   color: #f3f3f3;
   border-radius: 16px;

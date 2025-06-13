@@ -165,17 +165,18 @@ function MainChessApp() {
       setArrow([]);
     }
   }, [showArrows, lastBestMove]);
-  return (
-    <div style={{
+  return (    <div style={{
       flex: 1,
       display: 'flex',
       flexDirection: 'column',
-      height: '100%',
+      minHeight: '100%',
       position: 'relative',
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       width: '100%',
-      zIndex: 1
+      zIndex: 1,
+      overflowY: 'auto',
+      paddingTop: '20px'
     }}>
       <FloatingMusicPlayer />
       <div style={{

@@ -11,6 +11,48 @@
   box-sizing: border-box;
   overflow-x: hidden;
   margin-left: 80px; /* match sidebar width */
+  position: relative;
+}
+
+.lobby-root::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: 
+    linear-gradient(45deg, rgba(255,255,255,0.03) 25%, transparent 25%), 
+    linear-gradient(-45deg, rgba(255,255,255,0.03) 25%, transparent 25%), 
+    linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.03) 75%), 
+    linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.03) 75%);
+  background-size: 60px 60px;
+  background-position: 0 0, 0 30px, 30px -30px, -30px 0px;
+  filter: blur(1px);
+  opacity: 0.4;
+  z-index: -1;  animation: chessboardMove 12s linear infinite;
+}
+
+@keyframes chessboardMove {
+  0% {
+    background-position: 0 0, 0 30px, 30px -30px, -30px 0px;
+  }
+  100% {
+    background-position: 60px 60px, 60px 90px, 90px 30px, 30px 60px;
+  }
+}
+
+@keyframes chessboardPulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.02);
+  }
 }
 
 .lobby-header {
@@ -31,7 +73,7 @@
   padding: 6px 18px;
   display: inline-block;
   margin-top: 4px;
-  color: #1db954;
+  color: #fff;
   font-weight: 600;
   letter-spacing: 2px;
   box-shadow: 0 2px 8px #0002;
@@ -51,9 +93,8 @@
   border-radius: 18px;
   box-shadow: 0 4px 24px #0006;
   padding: 24px 18px 18px 18px;
-  min-width: 260px;
-  max-width: 320px;
-  width: 100%;
+  min-width: 340px;
+  max-width: 340px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -66,10 +107,10 @@
   letter-spacing: 1px;
 }
 .team-card:first-child .team-title {
-  color: #e63946;
+  color: #c4737a;
 }
 .team-card:last-child .team-title {
-  color: #457bff;
+  color: #7a9bc4;
 }
 .team-list-scroll {
   width: 100%;
@@ -92,18 +133,18 @@
   font-size: 1.05rem;
 }
 .team-card:first-child .player-slot.filled {
-  background: rgba(230,57,70,0.13);
+  background: rgba(196, 115, 122, 0.13);
 }
 .team-card:last-child .player-slot.filled {
-  background: rgba(69,123,255,0.13);
+  background: rgba(122, 155, 196, 0.13);
 }
 .team-card:first-child .player-slot.captain {
-  border: 2px solid #e63946;
-  box-shadow: 0 0 0 2px #e6394644;
+  border: 2px solid #c4737a;
+  box-shadow: 0 0 0 2px #c4737a44;
 }
 .team-card:last-child .player-slot.captain {
-  border: 2px solid #457bff;
-  box-shadow: 0 0 0 2px #457bff44;
+  border: 2px solid #7a9bc4;
+  box-shadow: 0 0 0 2px #7a9bc444;
 }
 .avatar-circle {
   width: 32px;
@@ -118,12 +159,13 @@
   justify-content: center;
   box-shadow: 0 2px 8px #0002;
   border: 2px solid #191414;
+  flex-shrink: 0;
 }
 .team-card:first-child .avatar-circle {
-  border-color: #e63946;
+  border-color: #c4737a;
 }
 .team-card:last-child .avatar-circle {
-  border-color: #457bff;
+  border-color: #7a9bc4;
 }
 .player-name {
   flex: 1;
@@ -137,17 +179,43 @@
   font-style: italic;
 }
 .captain-badge {
-  background: #fff;
-  color: #e63946;
+  background: #c7bc7c;
+  color: #ffffff;
   font-size: 0.85em;
   font-weight: 700;
   border-radius: 6px;
   padding: 2px 7px;
   margin-left: 8px;
   letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
 }
+
+.captain-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  animation: captainShine 7.5s ease-in-out infinite;
+}
+
 .team-card:last-child .captain-badge {
-  color: #457bff;
+  color: #ffffff;
+}
+
+@keyframes captainShine {
+  0% {
+    left: -100%;
+  }
+  15% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 .team-actions {
   display: flex;
@@ -155,11 +223,11 @@
   margin-top: 2px;
 }
 .team-card:first-child .team-actions button {
-  background: #e63946;
+  background: #c4737a;
   color: #fff;
 }
 .team-card:last-child .team-actions button {
-  background: #457bff;
+  background: #7a9bc4;
   color: #fff;
 }
 .team-actions button {
@@ -191,14 +259,11 @@
   font-weight: 900;
   color: #fff;
   letter-spacing: 2px;
-  background: linear-gradient(90deg, #e63946 0%, #457bff 100%);
-  border-radius: 50%;
   width: 70px;
   height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 24px #0006;
   margin-bottom: 8px;
 }
 .designate-captain-btn {
@@ -234,9 +299,9 @@
   border-radius: 8px;
 }
 .team-list-scroll::-webkit-scrollbar-thumb {
-  background: #e6394644;
+  background: #c4737a44;
   border-radius: 8px;
 }
 .team-card:last-child .team-list-scroll::-webkit-scrollbar-thumb {
-  background: #457bff44;
+  background: #7a9bc444;
 }

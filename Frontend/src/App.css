@@ -54,11 +54,24 @@ html, body {
   color: #888;
 }
 
-/* Sidebar flush to edge, full height */
-.sidebar {
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  /* Optionally set width here if Sidebar doesn't already */
+/* VibeChess Logo - Fixed in bottom right corner */
+.vibechess-logo {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  height: 60px;
+  width: auto; /* Maintains aspect ratio */
+  max-width: none; /* Prevents any width constraints */
+  filter: brightness(0) invert(1); /* Makes the logo completely white */
+  z-index: 1000; /* Ensures it's above everything else */
+  pointer-events: none; /* Logo doesn't interfere with clicks */
+  user-select: none; /* Logo can't be selected */
+  object-fit: contain; /* Preserves aspect ratio if container changes */
 }
+
+/* Prevent any transformations that could skew the logo */
+.vibechess-logo {
+  transform: none !important;
+}
+
+
