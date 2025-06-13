@@ -50,7 +50,7 @@ const Sidebar: React.FC<SidebarProps> = ({ icons, hovered, locked, onAreaEnter, 
           width: 100,
           height: 'auto', // Let content determine height
           maxHeight: '80vh', // Prevent overflow on small screens
-          background: 'rgba(35,39,47,0.3)',
+          background: 'rgba(35,39,47,0.15)',
           backdropFilter: 'blur(5px)',
           WebkitBackdropFilter: 'blur(5px)',
           border: '1px solid rgba(255,255,255,0.1)',

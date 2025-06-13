@@ -25,14 +25,7 @@ const Profile: React.FC = () => {
         alignItems: 'center',
         gap: '1.5rem',
       }}>
-        <img src="/Icons/Profile.png" alt="Profile" style={{ 
-          width: 72, 
-          height: 72, 
-          borderRadius: '50%', 
-          marginBottom: 12, 
-          border: '3px solid white',
-          boxShadow: '0 0 20px #5ecb8c66, 0 4px 16px #0006' 
-        }} />
+        <img src="/Icons/Profile.png" alt="Profile" style={{ width: 72, height: 72, borderRadius: '50%', marginBottom: 12, boxShadow: '0 2px 12px #5ecb8c33' }} />
         <h1 style={{ fontSize: '2.2rem', fontWeight: 900, letterSpacing: 1, margin: 0, color: '#5ecb8c', textShadow: '0 2px 12px #23272f' }}>Profile</h1>
         <p style={{ fontSize: '1.15rem', color: '#b0b8c1', margin: 0, textAlign: 'center', maxWidth: 320 }}>
           This is a placeholder profile page. Add your user info and settings here!
