@@ -176,7 +176,8 @@ function MainChessApp() {
       width: '100%',
       zIndex: 1,
       overflowY: 'auto',
-      paddingTop: '20px'
+      paddingTop: '20px',
+      paddingBottom: '20px'
     }}>
       <FloatingMusicPlayer />
       <div style={{

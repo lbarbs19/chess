@@ -11,9 +11,7 @@ interface ComputerControlsProps {
 export default function ComputerControls({ computerMode, setComputerMode, computerDepth, setComputerDepth }: ComputerControlsProps) {
   return (
     <div style={{
-      minWidth: 180,
-      maxWidth: 200,
-      width: 180,
+      width: 240,
       background: '#23272f',
       color: '#f3f3f3',
       borderRadius: 16,

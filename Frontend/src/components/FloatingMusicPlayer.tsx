@@ -6,7 +6,7 @@ const SPOTIFY_EMBED_URL = "https://open.spotify.com/embed/playlist/37i9dQZF1DXcB
 export default function FloatingMusicPlayer() {
   // --- Draggable State ---
   // Set initial position to top right (80% width, 5% height)
-  const [pos, setPos] = useState({ x: Math.floor(window.innerWidth * 0.8), y: Math.floor(window.innerHeight * 0.05) });
+  const [pos, setPos] = useState({ x: Math.floor(window.innerWidth * 0.9), y: Math.floor(window.innerHeight * 0.05) });
   const [dragging, setDragging] = useState(false);
   const [rel, setRel] = useState({ x: 0, y: 0 });
   const [minimized, setMinimized] = useState(true);

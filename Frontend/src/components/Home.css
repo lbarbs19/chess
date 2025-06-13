@@ -3,7 +3,6 @@
 .pawnstars-home-bg {
   min-height: 100%;
   width: 100%;
-  background: linear-gradient(135deg, #23272f 0%, #2d3340 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,10 +11,56 @@
   color: #f3f3f3;
   padding: 0;
   margin: 0;
+  position: relative;
+}
+
+.pawnstars-home-bg::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: 
+    repeating-conic-gradient(
+      rgba(255,255,255,0.05) 0deg 90deg,
+      transparent 90deg 180deg
+    ),
+    linear-gradient(135deg, #23272f 0%, #2d3340 100%);
+  background-size: 60px 60px, 100% 100%;
+  background-position: 0 0, 0 0;
+  filter: blur(1px);
+  opacity: 0.4;
+  z-index: -1;
+  animation: chessboardMove 20s linear infinite;
+}
+
+.pawnstars-home-bg::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #23272f 0%, #2d3340 100%);
+  z-index: -2;
+}
+
+@keyframes chessboardMove {
+  0% {
+    background-position: 0 0, 0 0;
+  }
+  100% {
+    background-position: 60px 60px, 0 0;
+  }
 }
 
 .pawnstars-home-card {
-  background: rgba(35,39,47,0.96);
+  background: rgba(35,39,47,1);
   border-radius: 24px;
   box-shadow: 0 8px 32px #0006;
   padding: 3rem 2.5rem 2.5rem 2.5rem;
@@ -47,6 +92,26 @@
   text-shadow: 0 2px 18px #23272f, 0 1px 0 #fff2, 0 0 2px #2dceef99;
   font-family: 'Montserrat', 'Inter', 'Segoe UI', Arial, sans-serif;
   line-height: 1.1;
+  animation: titleGlow 4s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+  0%, 100% {
+    text-shadow: 
+      0 2px 18px #23272f, 
+      0 1px 0 #fff2, 
+      0 0 3px #2dceef99,
+      0 0 12px #5ecb8c66,
+      0 0 18px #5ecb8c33;
+  }
+  50% {
+    text-shadow: 
+      0 2px 18px #23272f, 
+      0 1px 0 #fff2, 
+      0 0 4px #2dceef99,
+      0 0 16px #5ecb8c88,
+      0 0 24px #5ecb8c44;
+  }
 }
 
 .pawnstars-desc {
