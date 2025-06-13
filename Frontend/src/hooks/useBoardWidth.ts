@@ -1,21 +1,22 @@
 import { useState, useEffect } from 'react';
 
-export function useBoardWidth(controlsWidth: number) {
+// Add evalBarWidth as a parameter (default 48px)
+export function useBoardWidth(controlsWidth: number, evalBarWidth: number = 48) {
   const [boardWidth, setBoardWidth] = useState(() => {
-    const vw = Math.floor(window.innerWidth * 0.9) - controlsWidth;
+    const vw = Math.floor(window.innerWidth * 0.9) - controlsWidth - evalBarWidth;
     const vh = Math.floor(window.innerHeight * 0.9);
-    return Math.max(240, Math.min(900, vw, vh));
+    return Math.max(240, Math.min( vw, vh));
   });
 
   useEffect(() => {
     function handleResize() {
-      const vw = Math.floor(window.innerWidth * 0.9) - controlsWidth;
+      const vw = Math.floor(window.innerWidth * 0.9) - controlsWidth - evalBarWidth;
       const vh = Math.floor(window.innerHeight * 0.9);
-      setBoardWidth(Math.max(240, Math.min(900, vw, vh)));
+      setBoardWidth(Math.max(240, Math.min(vw, vh)));
     }
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [controlsWidth]);
+  }, [controlsWidth, evalBarWidth]);
 
   return boardWidth;
 }

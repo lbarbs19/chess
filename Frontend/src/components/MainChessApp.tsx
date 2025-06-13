@@ -122,7 +122,8 @@ function MainChessApp() {
   }, [moveIndex, moveHistory.length]);
 
   const CONTROLS_WIDTH = 260 + 36;
-  const boardWidth = useBoardWidth(CONTROLS_WIDTH);
+  const EVAL_BAR_WIDTH = 48; // Should match the eval bar's width
+  const boardWidth = useBoardWidth(CONTROLS_WIDTH, EVAL_BAR_WIDTH);
 
   useEngineAnalysis({
     fen,
@@ -175,9 +176,6 @@ function MainChessApp() {
       alignItems: 'center',
       justifyContent: 'center',
       width: '100%',
-      maxWidth: 1200,
-      margin: '0 auto',
-      padding: '32px 0',
       zIndex: 1
     }}>
       <FloatingMusicPlayer />
@@ -185,7 +183,6 @@ function MainChessApp() {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'flex-start',
-        width: '100%',
         justifyContent: 'center',
       }}>
         <EvalBarOverlay

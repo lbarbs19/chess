@@ -40,20 +40,13 @@ export default function ChessBoardWrapper({ boardWidth, fen, arrow, onMove, play
     <div style={{
       width: boardWidth,
       height: boardWidth,
-      aspectRatio: '1 / 1',
-      maxWidth: 900,
-      maxHeight: 900,
-      minWidth: 240,
-      minHeight: 240,
-      transition: 'width 0.2s, height 0.2s',
       boxShadow: '0 4px 24px #0004',
       borderRadius: 10,
       overflow: 'hidden',
-      background: '#23272f',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      marginLeft: 24, // Add space between board and controls
+      marginLeft: 12, // Add space between board and controls
     }}>
       <Chessboard
         id="board1"
@@ -61,8 +54,6 @@ export default function ChessBoardWrapper({ boardWidth, fen, arrow, onMove, play
         position={fen}
         onPieceDrop={handleDrop}
         customArrows={arrow}
-        // @ts-ignore: boardStyle is not a valid prop for react-chessboard, but kept for legacy style. Remove if not needed.
-        boardStyle={{ borderRadius: 18, boxShadow: '0 2px 12px #0002', background: '#181b22', width: '100%', height: '100%' }}
       />
     </div>
   );
