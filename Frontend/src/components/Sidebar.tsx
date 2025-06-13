@@ -18,14 +18,13 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ icons, hovered, locked, onAreaEnter, onAreaLeave, onTabClick }) => {
   const location = useLocation();
-  return (
-    <div
+  return (    <div
       style={{
         position: 'fixed', // Ensures sidebar is always fixed
         top: 0,
         left: 0,
         zIndex: 200,
-        height: '100vh',
+        height: '100%',
         width: 80, // or your sidebar width
         display: 'flex',
         flexDirection: 'column',
@@ -41,25 +40,26 @@ const Sidebar: React.FC<SidebarProps> = ({ icons, hovered, locked, onAreaEnter, 
       onFocus={onAreaEnter}
       onBlur={onAreaLeave}
       tabIndex={-1}
-    >
-      <div
+    >      <div
         style={{
           position: 'absolute',
           left: (hovered || locked) ? 0 : -64,
-          top: 0,
+          top: '50%',
+          transform: 'translateY(-50%)',
           width: 80,
           minWidth: 80,
-          height: '100%',
+          height: '75%', // Let content determine height
+          maxHeight: '80vh', // Prevent overflow on small screens
           background: 'rgba(35,39,47,0.98)',
           borderRadius: 22,
-          margin: '0 24px 0 0',
+          margin: 0,
           boxShadow: '0 4px 24px #0004',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '24px 0 18px 0',
-          transition: 'left 180ms cubic-bezier(.77,0,.18,1)',
+          transition: 'left 180ms cubic-bezier(.77,0,.18,1), transform 180ms cubic-bezier(.77,0,.18,1)',
           cursor: 'pointer',
           overflow: 'visible',
           willChange: 'left',
