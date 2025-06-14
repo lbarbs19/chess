@@ -172,7 +172,7 @@ function MainChessApp() {
       minHeight: '100%',
       position: 'relative',
       alignItems: 'center',
-      justifyContent: 'flex-start',
+      justifyContent: 'center',
       width: '100%',
       zIndex: 1,
       overflowY: 'auto',
