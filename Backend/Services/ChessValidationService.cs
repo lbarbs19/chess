@@ -17,7 +17,8 @@ public class ChessValidationService : IChessValidationService
         var move = new Move(new Position(from), new Position(to), game.WhoseTurn, promotion.ToPromotionChar());
         if (game.IsValidMove(move))
         {
-            var result = game.ApplyMove(move, true);
+            // Try the public MakeMove method instead of ApplyMove
+            var result = game.MakeMove(move, true);
             if (result == MoveType.Invalid)
                 return fen; // Return original FEN if move is invalid
             return game.GetFen();
