@@ -20,8 +20,8 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(provider =>
 
 // Add services
 builder.Services.AddSingleton<IRedisService, RedisService>();
-builder.Services.AddScoped<LobbyService>();
-builder.Services.AddScoped<GameService>();
+builder.Services.AddScoped<ILobbyService, LobbyService>();
+builder.Services.AddScoped<IGameService, GameService>();
 builder.Services.AddScoped<IChessValidationService, ChessValidationService>();
 
 // Add SignalR
