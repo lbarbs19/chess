@@ -64,23 +64,25 @@ public class GameController : ControllerBase
     /// </summary>
     [HttpPost("{gameId}/move")]
     public async Task<ActionResult<ApiResponse<object>>> MakeMove(
-        string gameId, 
+        string gameId,
         [FromBody] MakeMoveRequest request)
     {
         try
-        {            if (!ModelState.IsValid)
+        {
+            if (!ModelState.IsValid)
                 return BadRequest(ApiResponse.Error<object>("Invalid move request"));
 
             var result = await _gameService.MakeMoveAsync(
-                gameId, 
-                request.PlayerId, 
-                request.FromSquare, 
+                gameId,
+                request.PlayerId,
+                request.FromSquare,
                 request.ToSquare);
 
             return result.Success ? Ok(result) : BadRequest(result);
         }
         catch (Exception ex)
-        {            _logger.LogError(ex, "Error making move in game {GameId}", gameId);
+        {
+            _logger.LogError(ex, "Error making move in game {GameId}", gameId);
             return StatusCode(500, ApiResponse.Error<object>("Internal server error"));
         }
     }
@@ -97,9 +99,9 @@ public class GameController : ControllerBase
                 return BadRequest(ApiResponse.Error<bool>("Invalid validation request"));
 
             var isLegal = _chessValidationService.IsMoveLegal(
-                request.Fen, 
-                request.FromSquare, 
-                request.ToSquare, 
+                request.Fen,
+                request.FromSquare,
+                request.ToSquare,
                 request.Promotion);
 
             return Ok(ApiResponse.Ok(isLegal));
@@ -116,7 +118,7 @@ public class GameController : ControllerBase
     /// </summary>
     [HttpPost("{gameId}/end")]
     public async Task<ActionResult<ApiResponse<object>>> EndGame(
-        string gameId, 
+        string gameId,
         [FromBody] EndGameRequest request)
     {
         try
@@ -142,7 +144,8 @@ public class GameController : ControllerBase
             var players = await _gameService.GetGamePlayersAsync(gameId);
             return Ok(ApiResponse.Ok(players));
         }
-        catch (Exception ex)        {
+        catch (Exception ex)
+        {
             _logger.LogError(ex, "Error getting players for game {GameId}", gameId);
             return StatusCode(500, ApiResponse.Error<object>("Internal server error"));
         }
@@ -159,7 +162,8 @@ public class GameController : ControllerBase
             var moves = await _gameService.GetGameMovesAsync(gameId, lastN);
             return Ok(ApiResponse.Ok(moves));
         }
-        catch (Exception ex)        {
+        catch (Exception ex)
+        {
             _logger.LogError(ex, "Error getting moves for game {GameId}", gameId);
             return StatusCode(500, ApiResponse.Error<object>("Internal server error"));
         }

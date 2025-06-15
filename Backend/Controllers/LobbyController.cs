@@ -31,16 +31,17 @@ public class LobbyController : ControllerBase
             var result = await _lobbyService.CreateLobbyAsync(request);
             return result.Success ? Ok(result) : BadRequest(result);
         }
-        catch (Exception ex)        {
+        catch (Exception ex)
+        {
             _logger.LogError(ex, "Error creating lobby");
             return StatusCode(500, ApiResponse.Error<object>("Internal server error"));
         }
     }    /// <summary>
-    /// Join an existing lobby (Note: In practice, use SignalR hub for real-time joining)
-    /// </summary>
+         /// Join an existing lobby (Note: In practice, use SignalR hub for real-time joining)
+         /// </summary>
     [HttpPost("{lobbyId}/join")]
     public async Task<ActionResult<ApiResponse<object>>> JoinLobby(
-        string lobbyId, 
+        string lobbyId,
         [FromBody] JoinLobbyRequest request)
     {
         try
@@ -69,7 +70,7 @@ public class LobbyController : ControllerBase
     /// </summary>
     [HttpPost("{lobbyId}/leave")]
     public async Task<ActionResult<ApiResponse<object>>> LeaveLobby(
-        string lobbyId, 
+        string lobbyId,
         [FromBody] LeaveLobbyRequest request)
     {
         try
@@ -125,7 +126,7 @@ public class LobbyController : ControllerBase
     /// </summary>
     [HttpPut("{lobbyId}/settings")]
     public async Task<ActionResult<ApiResponse<object>>> UpdateLobbySettings(
-        string lobbyId, 
+        string lobbyId,
         [FromBody] UpdateLobbySettingsRequest request)
     {
         try

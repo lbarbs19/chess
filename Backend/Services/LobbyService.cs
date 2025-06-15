@@ -262,7 +262,8 @@ public class LobbyService : ILobbyService
         // Implementation for removing specific players (admin function)
         await Task.CompletedTask;
         return ApiResponse.Ok("Player removed successfully");
-    }    public async Task<ApiResponse<object>> UpdateLobbySettingsAsync(string roomCode, UpdateLobbySettingsRequest request)
+    }
+    public async Task<ApiResponse<object>> UpdateLobbySettingsAsync(string roomCode, UpdateLobbySettingsRequest request)
     {
         try
         {
@@ -275,7 +276,7 @@ public class LobbyService : ILobbyService
             // Get all players to find the host (first player)
             var players = await GetLobbyPlayersAsync(lobby);
             var hostPlayer = players.FirstOrDefault(); // First player is typically the host
-            
+
             if (hostPlayer?.Id != request.HostPlayerId)
             {
                 return ApiResponse.Error("Only the host can update lobby settings");
