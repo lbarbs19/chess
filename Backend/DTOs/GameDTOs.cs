@@ -45,8 +45,10 @@ public record GameMoveResponse(
 // DTO for making a move
 public record MakeMoveRequest(
     string GameId,
+    string PlayerId,
     string FromSquare,
-    string ToSquare
+    string ToSquare,
+    string? Promotion = null
 );
 
 // DTO for captain selecting a piece (Captain mode)

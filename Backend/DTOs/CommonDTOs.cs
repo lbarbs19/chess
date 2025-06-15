@@ -19,8 +19,17 @@ public static class ApiResponse
     public static ApiResponse<object> Ok(string? message = null) =>
         new(true, null, null, message);
 
+    public static ApiResponse<T> Success<T>(T data, string? message = null) =>
+        new(true, data, null, message);
+
+    public static ApiResponse<object> Success(string? message = null) =>
+        new(true, null, null, message);
+
     public static ApiResponse<T> Error<T>(string error) =>
         new(false, default, error);
+
+    public static ApiResponse<object> Error(string error) =>
+        new(false, null, error);
 }
 
 // DTO for connection status

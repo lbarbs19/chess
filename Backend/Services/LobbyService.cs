@@ -12,10 +12,14 @@ public interface ILobbyService
     Task<ApiResponse<LobbyResponse>> JoinLobbyAsync(JoinLobbyRequest request, string connectionId);
     Task<ApiResponse<object>> LeaveLobbyAsync(string roomCode, string connectionId);
     Task<ApiResponse<LobbyResponse>> GetLobbyAsync(string roomCode);
+    Task<ApiResponse<List<LobbyResponse>>> GetActiveLobbiesAsync();
 
     // Player management
     Task<ApiResponse<object>> UpdatePlayerRoleAsync(string roomCode, string playerId, PlayerRole newRole);
     Task<ApiResponse<object>> RemovePlayerAsync(string roomCode, string playerId);
+
+    // Lobby settings
+    Task<ApiResponse<object>> UpdateLobbySettingsAsync(string roomCode, UpdateLobbySettingsRequest request);
 
     // Game transition
     Task<ApiResponse<string>> StartGameAsync(string roomCode);
@@ -219,6 +223,32 @@ public class LobbyService : ILobbyService
         }
     }
 
+    public async Task<ApiResponse<List<LobbyResponse>>> GetActiveLobbiesAsync()
+    {
+        try
+        {
+            var activeLobbyCodes = await _redis.SetMembersAsync(RedisKeys.ActiveLobbies());
+            var lobbies = new List<LobbyResponse>();
+
+            foreach (var roomCode in activeLobbyCodes)
+            {
+                var lobby = await _redis.GetAsync<RedisLobby>(RedisKeys.Lobby(roomCode));
+                if (lobby != null)
+                {
+                    var players = await GetLobbyPlayersAsync(lobby);
+                    lobbies.Add(lobby.ToDto(players));
+                }
+            }
+
+            return ApiResponse.Success(lobbies);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting active lobbies");
+            return ApiResponse.Error<List<LobbyResponse>>("Failed to get active lobbies");
+        }
+    }
+
     public async Task<ApiResponse<object>> UpdatePlayerRoleAsync(string roomCode, string playerId, PlayerRole newRole)
     {
         // Implementation for updating player roles
@@ -232,6 +262,39 @@ public class LobbyService : ILobbyService
         // Implementation for removing specific players (admin function)
         await Task.CompletedTask;
         return ApiResponse.Ok("Player removed successfully");
+    }    public async Task<ApiResponse<object>> UpdateLobbySettingsAsync(string roomCode, UpdateLobbySettingsRequest request)
+    {
+        try
+        {
+            var lobby = await _redis.GetAsync<RedisLobby>(RedisKeys.Lobby(roomCode));
+            if (lobby == null)
+            {
+                return ApiResponse.Error("Lobby not found");
+            }
+
+            // Get all players to find the host (first player)
+            var players = await GetLobbyPlayersAsync(lobby);
+            var hostPlayer = players.FirstOrDefault(); // First player is typically the host
+            
+            if (hostPlayer?.Id != request.HostPlayerId)
+            {
+                return ApiResponse.Error("Only the host can update lobby settings");
+            }
+
+            // Update lobby properties
+            lobby.GameMode = request.GameMode ?? lobby.GameMode;
+            lobby.MoveTimerSeconds = request.MoveTimerSeconds ?? lobby.MoveTimerSeconds;
+            lobby.MaxPlayers = request.MaxPlayers ?? lobby.MaxPlayers;
+
+            await _redis.SetAsync(RedisKeys.Lobby(roomCode), lobby);
+
+            return ApiResponse.Success("Lobby settings updated successfully");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating lobby settings for {RoomCode}", roomCode);
+            return ApiResponse.Error("Failed to update lobby settings");
+        }
     }
 
     public async Task<ApiResponse<string>> StartGameAsync(string roomCode)

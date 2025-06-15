@@ -43,5 +43,6 @@ public record StartGameRequest(
 
 // DTO for leaving a lobby
 public record LeaveLobbyRequest(
-    string RoomCode
+    string RoomCode,
+    string PlayerId
 );
